@@ -1,4 +1,4 @@
-import { NextRequest } from "next/server";
+import { NextRequest, after } from "next/server";
 import { supabase } from "@/lib/supabase";
 import { sendWhatsAppMessage } from "@/lib/whatsapp";
 import { getAIResponse } from "@/lib/ai";
@@ -106,7 +106,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Process AI completion and reply in background to prevent webhook timeout
-    (async () => {
+    after(async () => {
       try {
         console.time("4. Database Select History (Async)");
         const { data: historyData } = await supabase
@@ -158,7 +158,7 @@ export async function POST(request: NextRequest) {
       } catch (err) {
         console.error("Background webhook processing error:", err);
       }
-    })();
+    });
 
     return Response.json({ status: "queued" });
   } catch (error) {
