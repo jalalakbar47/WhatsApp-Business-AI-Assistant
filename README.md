@@ -1,11 +1,11 @@
 # WhatsApp Business AI Assistant
 
-An enterprise-ready, high-performance Next.js integration gateway connecting the **Meta WhatsApp Business Cloud API** with **Google Gemini Large Language Models (LLMs)**. Features a real-time conversation management dashboard, an integrated knowledge retrieval base, and a seamless automated-to-human escalation flow.
+An enterprise-ready, high-performance Next.js integration gateway connecting the **Meta WhatsApp Business Cloud API** with **Groq Cloud Large Language Models (LLMs)**. Features a real-time conversation management dashboard, an integrated knowledge retrieval base, and a seamless automated-to-human escalation flow.
 
 ## 🚀 Key Features
 
 * **Sub-Second Webhook Handshake**: Decouples API receipt from AI response logic, acknowledging incoming requests instantly with an HTTP `200 OK` to satisfy Meta's strict timeout limits.
-* **Official Google Gen AI Integration**: Native implementation using the official `@google/genai` Client SDK, matching role structures (`model` roles) and system instruction prompts.
+* **Groq Cloud Integration**: High-performance inference using the official `openai` SDK pointing to Groq's low-latency endpoints, with custom system prompts.
 * **Dynamic Knowledge Base**: Add, edit, and delete business documents directly from the dashboard (`/knowledge`). Each entry is indexed with PostgreSQL full-text search and retrieved at query time to ground every AI response in accurate, up-to-date context (RAG pattern).
 * **Supabase Realtime Synchronization**: Interactive dashboard syncing message logs and conversation threads instantaneously via Supabase Realtime subscriptions.
 * **Hybrid Agent Routing**: Allows operators to switch between **Agent** (fully automated AI responses) and **Human** (manual chat panel inputs) modes dynamically per recipient.
@@ -23,7 +23,7 @@ Recipient Sends Message
        ├── Queries conversation state (Supabase)
        ├── Performs text similarity index search to retrieve details from Knowledge Base
        ├── Retrieves relevant contextual context
-       ├── Generates completion using Google Gen AI SDK
+       ├── Generates completion using Groq Cloud API
        ├── Dispatches reply to Recipient using WhatsApp Graph API
        └── Logs assistant response to DB (Updates dashboard in real-time)
 ```
@@ -62,8 +62,8 @@ Fill in the following variables:
 | `WHATSAPP_ACCESS_TOKEN` | System User Access Token from Meta Business settings |
 | `WHATSAPP_PHONE_NUMBER_ID` | Phone Number ID from WhatsApp > API Setup |
 | `WHATSAPP_VERIFY_TOKEN` | Secure verification string configured on webhooks |
-| `GEMINI_API_KEY` | Developer API Key from Google AI Studio |
-| `AI_MODEL` | Intended active Gemini model (e.g. `gemini-3.5-flash`) |
+| `GROQ_API_KEY` | Developer API Key from Groq Console |
+| `GROQ_MODEL` | Intended active Groq model (e.g. `llama-3.3-70b-versatile`) |
 | `NEXT_PUBLIC_SUPABASE_URL` | Supabase endpoint URL |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Public anon key for database interactions |
 | `SUPABASE_SERVICE_ROLE_KEY` | Service role key for backend transaction bypass |

@@ -1,38 +1,45 @@
-import { GoogleGenAI } from "@google/genai";
+import { OpenAI } from "openai";
 import { BASE_SYSTEM_PROMPT } from "@/lib/system-prompt";
 
 export async function getAIResponse(
   messages: { role: "user" | "assistant"; content: string }[],
   systemPrompt?: string
 ) {
-  const geminiApiKey = process.env.GEMINI_API_KEY;
+  const groqApiKey = process.env.GROQ_API_KEY;
 
-  if (!geminiApiKey) {
-    console.warn("WARNING: GEMINI_API_KEY is not defined in the environment.");
-    return "Authentication Error: Please configure GEMINI_API_KEY in the environment.";
+  if (!groqApiKey) {
+    console.warn("WARNING: GROQ_API_KEY is not defined in the environment.");
+    return "Authentication Error: Please configure GROQ_API_KEY in the environment.";
   }
 
   try {
-    const ai = new GoogleGenAI({ apiKey: geminiApiKey });
-    const model = process.env.AI_MODEL || "gemini-2.0-flash";
-
-    // Map roles: Google SDK expects 'model' instead of 'assistant'
-    const contents = messages.map(msg => ({
-      role: msg.role === "assistant" ? "model" : "user",
-      parts: [{ text: msg.content }]
-    }));
-
-    const response = await ai.models.generateContent({
-      model: model,
-      contents: contents,
-      config: {
-        systemInstruction: systemPrompt || BASE_SYSTEM_PROMPT,
-      }
+    const openai = new OpenAI({
+      apiKey: groqApiKey,
+      baseURL: "https://api.groq.com/openai/v1",
     });
 
-    const content = response.text || "Sorry, I couldn't generate a response.";
+    const model = process.env.GROQ_MODEL || "llama-3.3-70b-versatile";
 
-    // Clean up any reasoning/thinking tags (e.g. <think>...</think> or <think:id>...</think:id>)
+    // Build the format required by Groq API
+    const formattedMessages = [
+      {
+        role: "system" as const,
+        content: systemPrompt || BASE_SYSTEM_PROMPT,
+      },
+      ...messages.map((msg) => ({
+        role: msg.role === "assistant" ? ("assistant" as const) : ("user" as const),
+        content: msg.content,
+      })),
+    ];
+
+    const response = await openai.chat.completions.create({
+      model: model,
+      messages: formattedMessages,
+    });
+
+    const content = response.choices[0]?.message?.content || "Sorry, I couldn't generate a response.";
+
+    // Clean up reasoning if any
     const cleanedContent = content
       .replace(/<think[^>]*>[\s\S]*?<\/think[^>]*>/gi, "")
       .replace(/<think[^>]*>/gi, "")
@@ -41,19 +48,8 @@ export async function getAIResponse(
 
     return cleanedContent;
   } catch (error: unknown) {
-    const model = process.env.AI_MODEL || "gemini-2.0-flash";
-    console.error(`[AI] Google SDK Request failed (model: ${model}):`, error);
-    if (
-      error instanceof Error &&
-      (error.message.includes("not found") || error.message.includes("404"))
-    ) {
-      console.error(
-        `[AI] The model "${model}" does not exist. Check AI_MODEL in .env.local. ` +
-        `Valid options: gemini-2.5-flash, gemini-2.0-flash, gemini-1.5-flash`
-      );
-    }
-    // Return graceful fallback message to prevent delivery loops from crashing
+    const model = process.env.GROQ_MODEL || "llama-3.3-70b-versatile";
+    console.error(`[AI] Groq Request failed (model: ${model}):`, error);
     return "Thank you for your message. Jalal's assistant is temporarily offline, but we will review your message and get back to you shortly.";
   }
 }
-
