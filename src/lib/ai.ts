@@ -18,7 +18,7 @@ export async function getAIResponse(
       baseURL: "https://api.groq.com/openai/v1",
     });
 
-    const model = process.env.GROQ_MODEL || "llama-3.3-70b-versatile";
+    const model = process.env.GROQ_MODEL || "llama-3.1-8b-instant";
 
     // Build the format required by Groq API
     const formattedMessages = [

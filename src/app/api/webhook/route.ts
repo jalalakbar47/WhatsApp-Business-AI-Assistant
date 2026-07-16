@@ -109,12 +109,13 @@ export async function POST(request: NextRequest) {
     (async () => {
       try {
         console.time("4. Database Select History (Async)");
-        const { data: history } = await supabase
+        const { data: historyData } = await supabase
           .from("messages")
           .select("role, content")
           .eq("conversation_id", conversation!.id)
-          .order("created_at", { ascending: true })
+          .order("created_at", { ascending: false })
           .limit(20);
+        const history = (historyData || []).reverse();
         console.timeEnd("4. Database Select History (Async)");
 
         console.time("4.1. Database Select Knowledge (Async)");
