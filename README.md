@@ -105,9 +105,9 @@ This script sets up:
 
    | Field | Description | Example |
    |---|---|---|
-   | **Title** | Short, descriptive name for reference | `Clinic Location & Hours` |
-   | **Content / Facts** | The exact facts the Groq engine should know and cite | `We are located at 123 Main St, open Mon–Fri 9am–6pm.` |
-   | **Tags** | Comma-separated search helper terms | `location, hours, address, parking` |
+   | **Title** | Short, descriptive name for reference | `Professional Bio` |
+   | **Content / Facts** | The exact facts the Groq engine should know and cite | `Jalal Akbar is a Software Developer and AI Engineer specializing in building AI-powered applications, SaaS platforms, mobile apps, and IoT systems.` |
+   | **Tags** | Comma-separated search helper terms | `bio, developer, profile, skills, artificial intelligence` |
 
 4. Click **Save Document**. The data is active immediately.
 
@@ -116,7 +116,7 @@ This script sets up:
 ### 5. Similarity Sandbox (Query Tester)
 
 The side panel on the `/knowledge` page allows debugging relevance scores:
-1. Type a sample question (e.g. `"What is your location?"`).
+1. Type a sample question (e.g. `"Who is Jalal Akbar?"`).
 2. Click **Run Match Test**.
 3. Real-time scores will return (ranging from `0.000` to `1.000`) based on relevance, helping you tune your document tag and context keywords prior to production.
 
