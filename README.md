@@ -34,7 +34,7 @@ Recipient Sends Message
 
 * **Core Framework**: Next.js 16 (App Router, TypeScript)
 * **Database & Subscriptions**: Supabase (PostgreSQL, Realtime Engine, Full-Text indexing)
-* **AI Model Engine**: Google Gemini API (via `@google/genai`)
+* **AI Model Engine**: Groq API (via `openai`)
 * **Styling & Layout**: HSL Tailored UI Design System (CSS)
 
 ---
@@ -142,8 +142,8 @@ After running the schema above, open the Knowledge Base dashboard at **`http://l
 User asks a question via WhatsApp
    ──> Webhook receives message
    ──> search_knowledge() runs a full-text similarity query
-   ──> Top matching documents are injected into Gemini's system prompt
-   ──> Gemini generates a contextualized, grounded reply
+   ──> Top matching documents are injected into Groq's system prompt
+   ──> Groq generates a contextualized, grounded reply
    ──> Reply is sent back via WhatsApp Graph API
 ```
 

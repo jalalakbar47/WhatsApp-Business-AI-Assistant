@@ -127,7 +127,7 @@ export async function POST(request: NextRequest) {
           systemPrompt = `${BASE_SYSTEM_PROMPT}\n\n=== RELEVANT AGENT KNOWLEDGE ===\nUse the following verified information about Jalal Akbar to answer the user's query if relevant:\n${knowledge}\n==================================`;
         }
 
-        console.time("5. OpenRouter Client Call (Async)");
+        console.time("5. Groq Client Call (Async)");
         const aiResponse = await getAIResponse(
           (history || []).map((m) => ({
             role: m.role as "user" | "assistant",
@@ -135,7 +135,7 @@ export async function POST(request: NextRequest) {
           })),
           systemPrompt
         );
-        console.timeEnd("5. OpenRouter Client Call (Async)");
+        console.timeEnd("5. Groq Client Call (Async)");
 
         console.time("6. WhatsApp Send API Call (Async)");
         await sendWhatsAppMessage(phone, aiResponse);
