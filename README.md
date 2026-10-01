@@ -1,5 +1,12 @@
 # 🟢 WhatsApp Business AI Assistant
 
+[![Top language: TypeScript](https://img.shields.io/github/languages/top/jalalakbar47/WhatsApp-Business-AI-Assistant?style=for-the-badge)](https://github.com/jalalakbar47/WhatsApp-Business-AI-Assistant/search?l=TypeScript)
+[![GitHub stars](https://img.shields.io/github/stars/jalalakbar47/WhatsApp-Business-AI-Assistant?style=for-the-badge)](https://github.com/jalalakbar47/WhatsApp-Business-AI-Assistant/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/jalalakbar47/WhatsApp-Business-AI-Assistant?style=for-the-badge)](https://github.com/jalalakbar47/WhatsApp-Business-AI-Assistant/forks)
+[![Open GitHub issues](https://img.shields.io/github/issues/jalalakbar47/WhatsApp-Business-AI-Assistant?style=for-the-badge)](https://github.com/jalalakbar47/WhatsApp-Business-AI-Assistant/issues)
+[![Last commit](https://img.shields.io/github/last-commit/jalalakbar47/WhatsApp-Business-AI-Assistant?style=for-the-badge)](https://github.com/jalalakbar47/WhatsApp-Business-AI-Assistant/commits/main)
+[![Live deployment](https://img.shields.io/badge/Live%20Deployment-Vercel-000000?logo=vercel&style=for-the-badge)](https://whatsapp-business-ai-assistant-sage.vercel.app)
+
 An enterprise-ready, high-performance web dashboard and integration gateway connecting the **Meta WhatsApp Business Cloud API** with **Groq Cloud Large Language Models (LLMs)**. Features a real-time conversation management console, an integrated knowledge retrieval base (RAG), and a seamless automated-to-human escalation flow.
 
 ---
